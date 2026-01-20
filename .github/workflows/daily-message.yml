@@ -1,0 +1,30 @@
+name: Send Daily Discord Message
+
+on:
+  schedule:
+    # Runs at 22:00 IST (16:30 UTC) every day
+    - cron: '30 16 * * *'
+  
+  # Allows manual testing
+  workflow_dispatch:
+
+jobs:
+  send-message:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Run Discord script
+        run: node discord-bot.js
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}

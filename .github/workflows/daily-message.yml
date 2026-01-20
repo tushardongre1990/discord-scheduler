@@ -1,4 +1,4 @@
-name: Send Daily Discord Message
+name: Daily Health Reminder
 
 on:
   schedule:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  send-message:
+  send-reminder:
     runs-on: ubuntu-latest
     
     steps:
@@ -21,10 +21,7 @@ jobs:
         with:
           node-version: '18'
       
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Run Discord script
-        run: node discord-bot.js
+      - name: Run reminder script
+        run: node script.js
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
